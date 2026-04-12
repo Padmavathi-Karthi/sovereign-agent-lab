@@ -15,7 +15,7 @@ TASK_A_TOOLS_CALLED = []
 
 # Which venue did the agent confirm? Must be one of:
 # "The Albanach", "The Haymarket Vaults", or "none"
-TASK_A_CONFIRMED_VENUE = "FILL_ME_IN"
+TASK_A_CONFIRMED_VENUE = "none"
 
 # Total catering cost the agent calculated. Float, e.g. 5600.0
 # Write 0.0 if the agent didn't calculate it.
@@ -24,7 +24,7 @@ TASK_A_CATERING_COST_GBP = 0.0
 # Did the weather tool return outdoor_ok = True or False?
 TASK_A_OUTDOOR_OK = None
 
-TASK_A_NOTES = ""   # optional — anything unexpected
+TASK_A_NOTES = "The model appeared to propose tool calls in its message, but the harness reported that no tool calls were actually made. As a result, no venue was confirmed, no catering cost was calculated, and no weather result was returned."   # optional — anything unexpected
 
 # ── Task B ─────────────────────────────────────────────────────────────────
 

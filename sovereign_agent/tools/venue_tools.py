@@ -32,7 +32,8 @@ The one thing you WILL do here: make sure you understand what each function
 returns and when it returns an error — because the agent's ability to reason
 about failures depends entirely on what these functions return.
 """
-
+from openai import OpenAI
+import os
 import json
 import requests
 from langchain_core.tools import tool
@@ -169,9 +170,8 @@ def calculate_catering_cost(guests: int, price_per_head_gbp: float) -> str:
         "total_cost_gbp": round(guests * price_per_head_gbp, 2),
     })
 
-
 @tool
-def generate_event_flyer(venue_name: str, guest_count: int, event_theme: str) -> str:
+def generate_event_flyer(venue_name: str, guest_count: int, event_theme: str) -> dict:
     """
     Generate a promotional event flyer image for the confirmed Edinburgh venue.
     Call this AFTER a venue is confirmed, as the final output step.
@@ -180,46 +180,42 @@ def generate_event_flyer(venue_name: str, guest_count: int, event_theme: str) ->
     guest_count: confirmed number of attendees
     event_theme: short description, e.g. 'AI Meetup, professional, Scottish'
     """
-    # ── TODO: Replace this stub with a real images.generate() call ───────────
-    #
-    # 1. Import OpenAI at the top of this file:
-    #      from openai import OpenAI
-    #      import os
-    #
-    # 2. Create the client:
-    #      client = OpenAI(
-    #          base_url="https://api.tokenfactory.nebius.com/v1/",
-    #          api_key=os.getenv("NEBIUS_KEY"),
-    #      )
-    #
-    # 3. Build the prompt — include venue name, guest count, event theme:
-    #      prompt = (
-    #          f"Professional event flyer for {event_theme} at {venue_name}, "
-    #          f"Edinburgh. {guest_count} guests tonight. Warm lighting, "
-    #          f"Scottish architecture background, clean modern typography."
-    #      )
-    #
-    # 4. Call the image API:
-    #      response = client.images.generate(
-    #          model="black-forest-labs/flux-schnell",
-    #          prompt=prompt,
-    #          n=1,
-    #      )
-    #      url = response.data[0].url
-    #
-    # 5. Return a dict with at minimum: success, prompt_used, image_url
-    #    On failure, return: success=False, error=str(e), prompt_used, image_url=""
-    #
-    # When implemented, the mechanical check in grade.py will pass automatically.
-    # ──────────────────────────────────────────────────────────────────────────
+    
+    try:
+        # Create client
+        client = OpenAI(
+            base_url="https://api.tokenfactory.nebius.com/v1/",
+            api_key=os.getenv("NEBIUS_KEY"),
+            timeout=20,
+        )
 
-    prompt = (
-        f"Professional event flyer for {event_theme} at {venue_name}, "
-        f"Edinburgh. {guest_count} guests."
-    )
-    return json.dumps({
-        "success": False,
-        "error": "STUB — see TODO in sovereign_agent/tools/venue_tools.py",
-        "prompt_used": prompt,
-        "image_url": "",
-    })
+        # Build prompt
+        prompt = (
+            f"Professional event flyer for {event_theme} at {venue_name}, "
+            f"Edinburgh. {guest_count} guests tonight. Warm lighting, "
+            f"Scottish architecture background, clean modern typography."
+        )
+
+        # Call image API
+        response = client.images.generate(
+            model="black-forest-labs/flux-schnell",
+            prompt=prompt,
+            n=1,
+        )
+
+        image_url = response.data[0].url
+
+        return {
+            "success": True,
+            "prompt_used": prompt,
+            "image_url": image_url,
+        }
+
+    except Exception as e:
+        return {
+            "success": False,
+            "error": str(e),
+            "prompt_used": prompt if "prompt" in locals() else "",
+            "image_url": "",
+        }
+ 
