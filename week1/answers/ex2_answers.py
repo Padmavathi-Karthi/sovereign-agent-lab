@@ -29,13 +29,13 @@ TASK_A_NOTES = "The model appeared to propose tool calls in its message, but the
 # ── Task B ─────────────────────────────────────────────────────────────────
 
 # Has generate_event_flyer been implemented (not just the stub)?
-TASK_B_IMPLEMENTED = None   # True or False
+TASK_B_IMPLEMENTED = True   # True or False
 
 # The image URL returned (or the error message if still a stub).
-TASK_B_IMAGE_URL_OR_ERROR = "FILL_ME_IN"
+TASK_B_IMAGE_URL_OR_ERROR = "Request timed out."
 
 # The prompt sent to the image model. Copy from terminal output.
-TASK_B_PROMPT_USED = "FILL_ME_IN"
+TASK_B_PROMPT_USED = "Professional event flyer for Edinburgh AI Meetup, tech professionals, modern venue at The Haymarket Vaults, Edinburgh. 160 guests tonight. Warm lighting, Scottish architecture background, clean modern typography."
 
 # ── Task C ─────────────────────────────────────────────────────────────────
 
