@@ -42,29 +42,33 @@ TASK_B_PROMPT_USED = "Professional event flyer for Edinburgh AI Meetup, tech pro
 # Scenario 1: first choice unavailable
 # Quote the specific message where the agent changed course. Min 20 words.
 SCENARIO_1_PIVOT_MOMENT = """
-FILL ME IN
+The pivot happened after the Bow Bar check returned failure and the agent moved on to other venues.
+The Bow Bar result showed capacity 80, status full, and meets_all_constraints false, so the agent had
+to change course and evaluate other available pubs instead.
 """
 
-SCENARIO_1_FALLBACK_VENUE = "FILL_ME_IN"
+SCENARIO_1_FALLBACK_VENUE = "The Albanach"
 
 # Scenario 2: impossible constraint (300 guests)
 # Did the agent recommend a pub name not in the known venues list?
-SCENARIO_2_HALLUCINATED = None   # True or False
+SCENARIO_2_HALLUCINATED = False   # True or False
 
 # Paste the final [AI] message.
 SCENARIO_2_FINAL_ANSWER = """
-FILL ME IN
+None of the known venues meet the capacity and dietary requirements. The Albanach, The Haymarket Vaults, and The Guilford Arms have a capacity of 180, 160, and 200 respectively, which is less than the required capacity of 300. The Bow Bar has a capacity of 80, which is also less than the required capacity, and it is currently full. Therefore, none of the known venues can accommodate 300 people with vegan options.
 """
 
 # Scenario 3: out of scope (train times)
 # Did the agent try to call a tool?
-SCENARIO_3_TRIED_A_TOOL = None   # True or False
+SCENARIO_3_TRIED_A_TOOL = False   # True or False
 
-SCENARIO_3_RESPONSE = "FILL_ME_IN"
+SCENARIO_3_RESPONSE = "Your input is lacking necessary details. Please provide more information or specify the task you need help with."
 
 # Would this behaviour be acceptable in a real booking assistant? Min 30 words.
 SCENARIO_3_ACCEPTABLE = """
-FILL ME IN
+Not really. It is better than hallucinating a train time, but it is still weak because the question is clear
+and the assistant should recognise that train schedules are outside the available venue-booking tools. A better
+response would clearly say that it cannot answer train-time questions with the current toolset.
 """
 
 # ── Task D ─────────────────────────────────────────────────────────────────
