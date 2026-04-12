@@ -75,12 +75,32 @@ response would clearly say that it cannot answer train-time questions with the c
 
 # Paste the Mermaid output from `python exercise2_langgraph.py task_d` here.
 TASK_D_MERMAID_OUTPUT = """
-PASTE MERMAID OUTPUT HERE
+---
+config:
+  flowchart:
+    curve: linear
+---
+graph TD;
+        __start__([<p>__start__</p>]):::first
+        agent(agent)
+        tools(tools)
+        __end__([<p>__end__</p>]):::last
+        __start__ --> agent;
+        agent -.-> __end__;
+        agent -.-> tools;
+        tools --> agent;
+        classDef default fill:#f2f0ff,line-height:1.2
+        classDef first fill-opacity:0
+        classDef last fill:#bfb6fc
 """
 
 # Compare the LangGraph graph to exercise3_rasa/data/rules.yml. Min 30 words.
 TASK_D_COMPARISON = """
-FILL ME IN
+
+The LangGraph graph is very small and generic: one agent node can either end or call tools, then loop back.
+That means the model decides the path at runtime. In Rasa, the behaviour is described explicitly in flows or
+rules, so the assistant follows predefined business paths rather than freely choosing each next step.
+
 """
 
 # ── Reflection ─────────────────────────────────────────────────────────────
@@ -89,5 +109,10 @@ FILL ME IN
 # Must reference a specific behaviour from your run.
 
 MOST_SURPRISING = """
-FILL ME IN
+
+The most unexpected behaviour was that in Task A the model appeared to produce tool-call JSON in its reply,
+but the exercise still reported that no tool calls were actually made. Another surprising result was in
+Scenario 1, where the agent checked multiple venues, found valid options, but still ended with a flyer
+timeout and a messy final response instead of a clean booking recommendation.
+
 """
