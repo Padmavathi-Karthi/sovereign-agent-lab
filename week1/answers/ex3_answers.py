@@ -93,9 +93,11 @@ Agent: I'm sorry, I'm not trained to help with that.
 
 # Describe what CALM did after the out-of-scope message. Min 20 words.
 CONVERSATION_3_WHAT_HAPPENED = """
+
 CALM did not try to improvise an answer. It recognised that the request was outside the booking-confirmation flow,
 refused to answer the extra question, and redirected the user back to the supported task. That kept the assistant
 narrow, predictable, and aligned with its defined business role.
+
 """
 
 # Compare Rasa CALM's handling of the out-of-scope request to what
@@ -111,14 +113,18 @@ less flexible, but safer and more appropriate for a controlled business workflow
 
 # ── Task B: Cutoff guard ───────────────────────────────────────────────────
 
-TASK_B_DONE = None   # True or False
+TASK_B_DONE = True   # True or False
 
 # List every file you changed.
-TASK_B_FILES_CHANGED = []
+TASK_B_FILES_CHANGED = ["exercise3_rasa/actions/actions.py", "week1/answers/ex3_answers.py"]
 
 # How did you test that it works? Min 20 words.
 TASK_B_HOW_YOU_TESTED = """
-FILL ME IN
+
+I uncommented the Task B cutoff logic, retrained the model with make ex3-retrain, restarted the action server and
+chat, and then tested a booking case that should cross the cutoff. I checked that the assistant followed the new
+guard behaviour instead of confirming normally.
+
 """
 
 # ── CALM vs Old Rasa ───────────────────────────────────────────────────────
@@ -137,12 +143,13 @@ FILL ME IN
 # Min 30 words.
 
 CALM_VS_OLD_RASA = """
-FILL ME IN
 
-Think about:
-- What does the LLM handle now that Python handled before?
-- What does Python STILL handle, and why (hint: business rules)?
-- Is there anything you trusted more in the old approach?
+CALM removes a lot of manual plumbing. The LLM now handles more of the natural-language understanding, such as
+recognising the flow and extracting slot values from ordinary speech. Python still handles the business rules,
+which is exactly where I would want determinism: limits, escalation, and confirmation conditions. The trade-off is
+that CALM is simpler to build than old Rasa, but some behaviour feels less transparent than a fully explicit rules
+and regex pipeline.
+
 """
 
 # ── The setup cost ─────────────────────────────────────────────────────────
@@ -156,10 +163,11 @@ Think about:
 # Min 40 words.
 
 SETUP_COST_VALUE = """
-FILL ME IN
 
-Be specific. What can the Rasa CALM agent NOT do that LangGraph could?
-Is that a feature or a limitation for the confirmation use case?
-Think about: can the CALM agent improvise a response it wasn't trained on?
-Can it call a tool that wasn't defined in flows.yml?
+The setup cost buys control. Compared with LangGraph, the CALM agent cannot freely explore, improvise broad answers,
+or call tools unless they are already designed into the flows and actions. For a booking-confirmation assistant,
+that is mostly a feature rather than a limitation, because the goal is consistency, auditability, and enforcement
+of business rules. LangGraph is more flexible, but CALM is better for narrow operational tasks where mistakes are
+costly.
+
 """
