@@ -42,35 +42,71 @@ Conversation 3 (out of scope):
 # ── Conversation 1: Happy path ─────────────────────────────────────────────
 
 CONVERSATION_1_TRACE = """
-PASTE YOUR rasa shell TERMINAL OUTPUT HERE
+
+You:   I am calling to confirm a booking  
+Agent: How many guests are you confirming for tonight's event?
+You:   160 guests                                                                        
+Agent: And how many of those guests will need vegan meals?
+You:   about 50 need vegan                                                               
+Agent: What deposit amount in GBP are you proposing to secure the booking?
+You:   £200 deposit  
+Agent: Thank you — booking confirmed. 160 guests, 50 requiring vegan meals, £200 deposit accepted. I'll send written confirmation to the organiser shortly.
+       Is there anything else I can help you with?
+
 """
 
-CONVERSATION_1_OUTCOME = "FILL_ME_IN"   # "confirmed" or "escalated"
+CONVERSATION_1_OUTCOME = "confirmed"   # "confirmed" or "escalated"
 
 # ── Conversation 2: Deposit too high ───────────────────────────────────────
 
 CONVERSATION_2_TRACE = """
-PASTE YOUR rasa shell TERMINAL OUTPUT HERE
+
+You:   I am calling to confirm a booking  
+Agent: How many guests are you confirming for tonight's event?
+You:   160 guests                                                                        
+Agent: And how many of those guests will need vegan meals?
+You:   about 50 need vegan                                                               
+Agent: What deposit amount in GBP are you proposing to secure the booking?
+You:   £500 deposit  
+Agent: I need to check one thing with the organiser before I can confirm. The issue is: a deposit of £500 exceeds the organiser's authorised limit of £300. Can I call you back within 15 minutes?
+       Is there anything else I can help you with?
+
 """
 
-CONVERSATION_2_OUTCOME = "FILL_ME_IN"   # "confirmed" or "escalated"
-CONVERSATION_2_REASON  = "FILL_ME_IN"   # the reason the agent gave for escalating
+CONVERSATION_2_OUTCOME = "escalated"   # "confirmed" or "escalated"
+CONVERSATION_2_REASON  = "The proposed deposit of £500 exceeded the organiser's authorised limit of £300."   # the reason the agent gave for escalating
 
 # ── Conversation 3: Out of scope ───────────────────────────────────────────
 
 CONVERSATION_3_TRACE = """
-PASTE YOUR rasa shell TERMINAL OUTPUT HERE
+
+You:   I am calling to confirm a booking  
+Agent: How many guests are you confirming for tonight's event?
+You:   160 guests                                                                        
+Agent: And how many of those guests will need vegan meals?
+You:   can you arrange parking for the speakers? 
+Agent: I'm sorry, I'm not trained to help with that.
+       I can only help with confirming tonight's venue booking. For anything else, please contact the event organiser directly.
+       Would you like to continue with confirm booking?
+
 """
 
 # Describe what CALM did after the out-of-scope message. Min 20 words.
 CONVERSATION_3_WHAT_HAPPENED = """
-FILL ME IN
+CALM did not try to improvise an answer. It recognised that the request was outside the booking-confirmation flow,
+refused to answer the extra question, and redirected the user back to the supported task. That kept the assistant
+narrow, predictable, and aligned with its defined business role.
 """
 
 # Compare Rasa CALM's handling of the out-of-scope request to what
 # LangGraph did in Exercise 2 Scenario 3. Min 40 words.
 OUT_OF_SCOPE_COMPARISON = """
-FILL ME IN
+
+In Exercise 2, the LangGraph agent answered the train-times question weakly by saying the input lacked necessary
+details, even though the real problem was that the request was outside its tool scope. Here, CALM behaved more
+like a bounded employee: it clearly refused the unsupported request and redirected back to booking help. That is
+less flexible, but safer and more appropriate for a controlled business workflow.
+
 """
 
 # ── Task B: Cutoff guard ───────────────────────────────────────────────────
