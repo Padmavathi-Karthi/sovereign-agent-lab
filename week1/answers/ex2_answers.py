@@ -11,7 +11,10 @@ Run `python grade.py ex2` to check for obvious issues.
 # Look at [TOOL_CALL] lines in your terminal output.
 # Example: ["check_pub_availability", "get_edinburgh_weather"]
 
-TASK_A_TOOLS_CALLED = []
+TASK_A_TOOLS_CALLED = ["check_pub_availability",
+    "calculate_catering_cost",
+    "get_edinburgh_weather",
+    "generate_event_flyer",]
 
 # Which venue did the agent confirm? Must be one of:
 # "The Albanach", "The Haymarket Vaults", or "none"
@@ -22,7 +25,7 @@ TASK_A_CONFIRMED_VENUE = "none"
 TASK_A_CATERING_COST_GBP = 0.0
 
 # Did the weather tool return outdoor_ok = True or False?
-TASK_A_OUTDOOR_OK = None
+TASK_A_OUTDOOR_OK = True
 
 TASK_A_NOTES = "The model appeared to propose tool calls in its message, but the harness reported that no tool calls were actually made. As a result, no venue was confirmed, no catering cost was calculated, and no weather result was returned."   # optional — anything unexpected
 
