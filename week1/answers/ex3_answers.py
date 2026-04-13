@@ -90,7 +90,6 @@ Agent: I'm sorry, I'm not trained to help with that.
        Would you like to continue with confirm booking?
 
 """
-
 # Describe what CALM did after the out-of-scope message. Min 20 words.
 CONVERSATION_3_WHAT_HAPPENED = """
 

@@ -27,7 +27,6 @@ the printed trace still only showed the search_venues tool call rather than a fu
 the key MCP idea: I changed shared server-side data without changing the client agent code.
 
 """
-
 # ── MCP vs hardcoded ───────────────────────────────────────────────────────
 
 LINES_OF_TOOL_CODE_EX2 = 4   # count in exercise2_langgraph.py
